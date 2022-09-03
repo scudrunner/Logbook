@@ -19,10 +19,21 @@ with open( logbook_file, 'r' ) as theFile:
     reader = csv.DictReader(theFile)
     flights = list(reader)
     logging.info('starting with  '+ str(len(flights)) + ' logbook entries')
-    
+origin = 'From '
+destination = 'To '    
+
+
 with open( airport_database, 'r' ) as theFile:
     reader = csv.DictReader(theFile)
     usairports = list(reader)
+
+#strip white space and capitalize 
+for flight in flights:
+    flight[origin] = flight[origin].strip()
+    flight[origin] = flight[origin].upper()
+    flight[destination] = flight[destination].strip()
+    flight[destination] = flight[destination].upper()
+
 
         
 #look for ICAO and throw out any with bad data 
@@ -33,10 +44,12 @@ for index, flight in enumerate(flights):
         if airport['ident'] == flight['From ']:
             flight["from Lat"]= airport['latitude_deg']
             flight["from Lon"]= airport['longitude_deg']
+            flight["from name"] = airport['name']
             found_to = True
         if airport['ident'] == flight['To ']:
             flight["to Lat"]= airport['latitude_deg']
             flight["to Lon"]= airport['longitude_deg']
+            flight["to name"] = airport['name']
             found_from = True
     if not (found_to and found_from):    
             logging.info(flights[index])
@@ -87,15 +100,15 @@ for index, flight in enumerate(plotflights):
 
 airports=[]
 for flight in plotflights:
-    airport1 = (flight['To '],flight["to Lon"], flight["to Lat"] )
-    airport2 = (flight['From '], flight["from Lon"], flight["from Lat"] )
+    airport1 = (flight['To '],flight["to Lon"], flight["to Lat"], flight["to name"] )
+    airport2 = (flight['From '], flight["from Lon"], flight["from Lat"], flight["from name"] )
     if airport1 not in airports:
         airports.append(airport1)
-        pnt = kml.newpoint(name=airport1[0], coords=[(airport1[1],airport1[2])]) 
+        pnt = kml.newpoint(name=airport1[0], coords=[(airport1[1],airport1[2])], description= airport1[3]) 
         pnt.style.iconstyle.icon.href = 'http://maps.google.com/mapfiles/kml/pal2/icon56.png'
     if airport2 not in airports:
         airports.append(airport2)
-        pnt = kml.newpoint(name=airport2[0], coords=[(airport2[1],airport2[2])]) 
+        pnt = kml.newpoint(name=airport2[0], coords=[(airport2[1],airport2[2])], description= airport2[3]  ) 
         pnt.style.iconstyle.icon.href = 'http://maps.google.com/mapfiles/kml/pal2/icon56.png'
 
 #print(airports)

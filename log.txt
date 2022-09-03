@@ -1,168 +1,40 @@
-2022-08-29 09:45:50,364 {'Aircraft ': 'E-170', 'From ': 'KBOS', 'To ': 'NA', 'from Lat': '42.3643', 'from Lon': '-71.005203'}
-2022-08-29 09:45:50,391 {'Aircraft ': 'E-170', 'From ': 'NA', 'To ': 'NA'}
-2022-08-29 09:48:33,432 {'Aircraft ': 'E-170', 'From ': 'KBOS', 'To ': 'NA', 'from Lat': '42.3643', 'from Lon': '-71.005203'}
-2022-08-29 09:48:33,450 {'Aircraft ': 'E-170', 'From ': 'NA', 'To ': 'NA'}
-2022-08-29 09:49:13,120 {'Aircraft ': 'E-170', 'From ': 'KBOS', 'To ': 'NA', 'from Lat': '42.3643', 'from Lon': '-71.005203'}
-2022-08-29 09:49:13,136 {'Aircraft ': 'E-170', 'From ': 'NA', 'To ': 'NA'}
-2022-08-29 09:49:42,385 {'Aircraft ': 'E-170', 'From ': 'KBOS', 'To ': 'NA', 'from Lat': '42.3643', 'from Lon': '-71.005203'}
-2022-08-29 09:49:42,405 {'Aircraft ': 'E-170', 'From ': 'NA', 'To ': 'NA'}
-2022-08-29 09:49:42,405 Plotting 9flight routes
-2022-08-29 09:52:02,197 starting with  16 logbook entries
-2022-08-29 09:52:02,281 {'Aircraft ': 'E-170', 'From ': 'KBOS', 'To ': 'NA', 'from Lat': '42.3643', 'from Lon': '-71.005203'}
-2022-08-29 09:52:02,313 {'Aircraft ': 'E-170', 'From ': 'NA', 'To ': 'NA'}
-2022-08-29 09:52:02,313 found  14 valid routes
-2022-08-29 09:52:02,313 Plotting 9 flight routes
-2022-08-29 10:43:18,621 starting with  18 logbook entries
-2022-08-29 10:43:18,705 {'Aircraft ': 'E-170', 'From ': 'KBOS', 'To ': 'NA', 'from Lat': '42.3643', 'from Lon': '-71.005203'}
-2022-08-29 10:43:18,722 {'Aircraft ': 'E-170', 'From ': 'NA', 'To ': 'NA'}
-2022-08-29 10:43:18,738 found  16 valid routes
-2022-08-29 10:43:18,738 Plotting 11 consolidated flight routes
-2022-08-29 10:43:43,378 starting with  18 logbook entries
-2022-08-29 10:43:43,476 {'Aircraft ': 'E-170', 'From ': 'KBOS', 'To ': 'NA', 'from Lat': '42.3643', 'from Lon': '-71.005203'}
-2022-08-29 10:43:43,502 {'Aircraft ': 'E-170', 'From ': 'NA', 'To ': 'NA'}
-2022-08-29 10:43:43,502 found  16 valid routes
-2022-08-29 10:43:43,502 Plotting 11 consolidated flight routes
-2022-08-29 10:43:43,502 found  6 local Flights
-2022-08-29 10:44:51,671 starting with  18 logbook entries
-2022-08-29 10:44:51,771 {'Aircraft ': 'E-170', 'From ': 'KBOS', 'To ': 'NA', 'from Lat': '42.3643', 'from Lon': '-71.005203'}
-2022-08-29 10:44:51,790 {'Aircraft ': 'E-170', 'From ': 'NA', 'To ': 'NA'}
-2022-08-29 10:44:51,790 found  16 valid routes
-2022-08-29 10:44:51,790 Plotting 11 consolidated flight routes
-2022-08-29 10:44:51,790 found  6 local Flights
-2022-08-29 10:52:45,999 starting with  18 logbook entries
-2022-08-29 10:52:46,093 {'Aircraft ': 'E-170', 'From ': 'KBOS', 'To ': 'NA', 'from Lat': '42.3643', 'from Lon': '-71.005203'}
-2022-08-29 10:52:46,113 {'Aircraft ': 'E-170', 'From ': 'NA', 'To ': 'NA'}
-2022-08-29 10:52:46,120 found  16 valid routes
-2022-08-29 10:52:46,120 Plotting 11 consolidated flight routes
-2022-08-29 10:52:46,120 found  6 local Flights
-2022-08-29 10:53:53,411 starting with  18 logbook entries
-2022-08-29 10:53:53,508 {'Aircraft ': 'E-170', 'From ': 'KBOS', 'To ': 'NA', 'from Lat': '42.3643', 'from Lon': '-71.005203'}
-2022-08-29 10:53:53,531 {'Aircraft ': 'E-170', 'From ': 'NA', 'To ': 'NA'}
-2022-08-29 10:53:53,538 found  16 valid routes
-2022-08-29 10:53:53,538 Plotting 11 consolidated flight routes
-2022-08-29 10:53:53,538 found  6 local Flights
-2022-08-29 11:02:50,147 starting with  18 logbook entries
-2022-08-29 11:02:50,237 {'Aircraft ': 'E-170', 'From ': 'KBOS', 'To ': 'NA', 'from Lat': '42.3643', 'from Lon': '-71.005203'}
-2022-08-29 11:02:50,254 {'Aircraft ': 'E-170', 'From ': 'NA', 'To ': 'NA'}
-2022-08-29 11:02:50,261 found  16 valid routes
-2022-08-29 11:02:50,261 Plotting 11 consolidated flight routes
-2022-08-29 11:02:50,261 found  0 local Flights
-2022-08-29 11:02:55,688 starting with  18 logbook entries
-2022-08-29 11:02:55,785 {'Aircraft ': 'E-170', 'From ': 'KBOS', 'To ': 'NA', 'from Lat': '42.3643', 'from Lon': '-71.005203'}
-2022-08-29 11:02:55,806 {'Aircraft ': 'E-170', 'From ': 'NA', 'To ': 'NA'}
-2022-08-29 11:02:55,815 found  16 valid routes
-2022-08-29 11:02:55,815 Plotting 11 consolidated flight routes
-2022-08-29 11:02:55,815 found  0 local Flights
-2022-08-29 11:09:54,083 starting with  18 logbook entries
-2022-08-29 11:09:54,168 {'Aircraft ': 'E-170', 'From ': 'KBOS', 'To ': 'NA', 'from Lat': '42.3643', 'from Lon': '-71.005203'}
-2022-08-29 11:09:54,200 {'Aircraft ': 'E-170', 'From ': 'NA', 'To ': 'NA'}
-2022-08-29 11:09:54,200 found  16 valid routes
-2022-08-29 11:09:54,200 Plotting 11 consolidated flight routes
-2022-08-29 11:10:26,351 starting with  18 logbook entries
-2022-08-29 11:10:26,430 {'Aircraft ': 'E-170', 'From ': 'KBOS', 'To ': 'NA', 'from Lat': '42.3643', 'from Lon': '-71.005203'}
-2022-08-29 11:10:26,465 {'Aircraft ': 'E-170', 'From ': 'NA', 'To ': 'NA'}
-2022-08-29 11:10:26,465 found  16 valid routes
-2022-08-29 11:10:26,465 Plotting 11 consolidated flight routes
-2022-08-29 11:10:26,465 found  2 local Flights
-2022-08-29 11:19:10,398 starting with  18 logbook entries
-2022-08-29 11:19:10,498 {'Aircraft ': 'E-170', 'From ': 'KBOS', 'To ': 'NA', 'from Lat': '42.3643', 'from Lon': '-71.005203'}
-2022-08-29 11:19:10,515 {'Aircraft ': 'E-170', 'From ': 'NA', 'To ': 'NA'}
-2022-08-29 11:19:10,531 found  16 valid routes
-2022-08-29 11:19:10,531 Plotting 11 consolidated flight routes
-2022-08-29 11:19:10,531 found  2 local Flights
-2022-08-29 11:19:32,473 starting with  18 logbook entries
-2022-08-29 11:19:32,573 {'Aircraft ': 'E-170', 'From ': 'KBOS', 'To ': 'NA', 'from Lat': '42.3643', 'from Lon': '-71.005203'}
-2022-08-29 11:19:32,589 {'Aircraft ': 'E-170', 'From ': 'NA', 'To ': 'NA'}
-2022-08-29 11:19:32,589 found  16 valid routes
-2022-08-29 11:19:32,589 Plotting 11 consolidated flight routes
-2022-08-29 11:19:32,589 found  2 local Flights
-2022-08-29 11:19:49,910 starting with  18 logbook entries
-2022-08-29 11:19:49,996 {'Aircraft ': 'E-170', 'From ': 'KBOS', 'To ': 'NA', 'from Lat': '42.3643', 'from Lon': '-71.005203'}
-2022-08-29 11:19:50,017 {'Aircraft ': 'E-170', 'From ': 'NA', 'To ': 'NA'}
-2022-08-29 11:19:50,040 found  16 valid routes
-2022-08-29 11:19:50,040 Plotting 11 consolidated flight routes
-2022-08-29 11:19:50,040 found  2 local Flights
-2022-08-29 11:21:15,264 starting with  18 logbook entries
-2022-08-29 11:21:15,368 {'Aircraft ': 'E-170', 'From ': 'KBOS', 'To ': 'NA', 'from Lat': '42.3643', 'from Lon': '-71.005203'}
-2022-08-29 11:21:15,384 {'Aircraft ': 'E-170', 'From ': 'NA', 'To ': 'NA'}
-2022-08-29 11:21:15,402 found  16 valid routes
-2022-08-29 11:21:15,402 Plotting 11 consolidated flight routes
-2022-08-29 11:21:15,402 found  2 local Flights
-2022-08-29 11:23:20,232 starting with  18 logbook entries
-2022-08-29 11:23:20,315 {'Aircraft ': 'E-170', 'From ': 'KBOS', 'To ': 'NA', 'from Lat': '42.3643', 'from Lon': '-71.005203'}
-2022-08-29 11:23:20,348 {'Aircraft ': 'E-170', 'From ': 'NA', 'To ': 'NA'}
-2022-08-29 11:23:20,348 found  16 valid routes
-2022-08-29 11:23:20,348 Plotting 11 consolidated flight routes
-2022-08-29 11:23:20,348 found  2 local Flights
-2022-08-29 11:44:51,012 starting with  18 logbook entries
-2022-08-29 11:44:51,096 {'Aircraft ': 'E-170', 'From ': 'KBOS', 'To ': 'NA', 'from Lat': '42.3643', 'from Lon': '-71.005203'}
-2022-08-29 11:44:51,112 {'Aircraft ': 'E-170', 'From ': 'NA', 'To ': 'NA'}
-2022-08-29 11:44:51,129 found  16 valid routes
-2022-08-29 11:44:51,129 Plotting 11 consolidated flight routes
-2022-08-29 11:44:51,129 found  2 local Flights
-2022-08-29 11:46:18,748 starting with  18 logbook entries
-2022-08-29 11:46:18,844 {'Aircraft ': 'E-170', 'From ': 'KBOS', 'To ': 'NA', 'from Lat': '42.3643', 'from Lon': '-71.005203'}
-2022-08-29 11:46:18,870 {'Aircraft ': 'E-170', 'From ': 'NA', 'To ': 'NA'}
-2022-08-29 11:46:18,875 found  16 valid routes
-2022-08-29 11:46:18,876 Plotting 11 consolidated flight routes
-2022-08-29 11:46:18,876 found  2 local Flights
-2022-08-29 11:46:52,225 starting with  18 logbook entries
-2022-08-29 11:46:52,324 {'Aircraft ': 'E-170', 'From ': 'KBOS', 'To ': 'NA', 'from Lat': '42.3643', 'from Lon': '-71.005203'}
-2022-08-29 11:46:52,340 {'Aircraft ': 'E-170', 'From ': 'NA', 'To ': 'NA'}
-2022-08-29 11:46:52,356 found  16 valid routes
-2022-08-29 11:46:52,357 Plotting 11 consolidated flight routes
-2022-08-29 11:46:52,357 found  2 local Flights
-2022-08-29 11:48:05,350 starting with  18 logbook entries
-2022-08-29 11:48:05,432 {'Aircraft ': 'E-170', 'From ': 'KBOS', 'To ': 'NA', 'from Lat': '42.3643', 'from Lon': '-71.005203'}
-2022-08-29 11:48:05,450 {'Aircraft ': 'E-170', 'From ': 'NA', 'To ': 'NA'}
-2022-08-29 11:48:05,466 found  16 valid routes
-2022-08-29 11:48:05,466 Plotting 11 consolidated flight routes
-2022-08-29 11:48:05,466 found  2 local Flights
-2022-08-29 11:56:32,680 starting with  18 logbook entries
-2022-08-29 11:56:32,787 {'Aircraft ': 'E-170', 'From ': 'KBOS', 'To ': 'NA', 'from Lat': '42.3643', 'from Lon': '-71.005203'}
-2022-08-29 11:56:32,819 {'Aircraft ': 'E-170', 'From ': 'NA', 'To ': 'NA'}
-2022-08-29 11:56:32,828 found  16 valid routes
-2022-08-29 11:56:32,828 Plotting 11 consolidated flight routes
-2022-08-29 11:56:32,828 found  2 local Flights
-2022-08-29 11:57:16,278 starting with  18 logbook entries
-2022-08-29 11:57:16,379 {'Aircraft ': 'E-170', 'From ': 'KBOS', 'To ': 'NA', 'from Lat': '42.3643', 'from Lon': '-71.005203'}
-2022-08-29 11:57:16,407 {'Aircraft ': 'E-170', 'From ': 'NA', 'To ': 'NA'}
-2022-08-29 11:57:16,415 found  16 valid routes
-2022-08-29 11:57:16,416 Plotting 11 consolidated flight routes
-2022-08-29 11:57:16,416 found  2 local Flights
-2022-08-29 12:00:26,580 starting with  18 logbook entries
-2022-08-29 12:00:26,683 {'Aircraft ': 'E-170', 'From ': 'KBOS', 'To ': 'NA', 'from Lat': '42.3643', 'from Lon': '-71.005203'}
-2022-08-29 12:00:26,711 {'Aircraft ': 'E-170', 'From ': 'NA', 'To ': 'NA'}
-2022-08-29 12:00:26,719 found  16 valid routes
-2022-08-29 12:00:26,720 Plotting 11 consolidated flight routes
-2022-08-29 12:00:26,720 found  2 local Flights
-2022-08-29 12:00:56,714 starting with  18 logbook entries
-2022-08-29 12:00:56,828 {'Aircraft ': 'E-170', 'From ': 'KBOS', 'To ': 'NA', 'from Lat': '42.3643', 'from Lon': '-71.005203'}
-2022-08-29 12:00:56,854 {'Aircraft ': 'E-170', 'From ': 'NA', 'To ': 'NA'}
-2022-08-29 12:00:56,862 found  16 valid routes
-2022-08-29 12:00:56,862 Plotting 11 consolidated flight routes
-2022-08-29 12:00:56,862 found  2 local Flights
-2022-08-29 12:05:41,134 starting with  18 logbook entries
-2022-08-29 12:05:41,232 {'Aircraft ': 'E-170', 'From ': 'KBOS', 'To ': 'NA', 'from Lat': '42.3643', 'from Lon': '-71.005203'}
-2022-08-29 12:05:41,249 {'Aircraft ': 'E-170', 'From ': 'NA', 'To ': 'NA'}
-2022-08-29 12:05:41,249 found  16 valid routes
-2022-08-29 12:05:41,249 Plotting 11 consolidated flight routes
-2022-08-29 12:05:41,249 found  2 local Flights
-2022-08-29 12:06:06,179 starting with  18 logbook entries
-2022-08-29 12:06:06,263 {'Aircraft ': 'E-170', 'From ': 'KBOS', 'To ': 'NA', 'from Lat': '42.3643', 'from Lon': '-71.005203'}
-2022-08-29 12:06:06,279 {'Aircraft ': 'E-170', 'From ': 'NA', 'To ': 'NA'}
-2022-08-29 12:06:06,295 found  16 valid routes
-2022-08-29 12:06:06,295 Plotting 11 consolidated flight routes
-2022-08-29 12:06:06,295 found  2 local Flights
-2022-08-29 12:06:37,050 starting with  18 logbook entries
-2022-08-29 12:06:37,122 {'Aircraft ': 'E-170', 'From ': 'KBOS', 'To ': 'NA', 'from Lat': '42.3643', 'from Lon': '-71.005203'}
-2022-08-29 12:06:37,139 {'Aircraft ': 'E-170', 'From ': 'NA', 'To ': 'NA'}
-2022-08-29 12:06:37,154 found  16 valid routes
-2022-08-29 12:06:37,154 Plotting 11 consolidated flight routes
-2022-08-29 12:06:37,154 found  2 local Flights
-2022-08-29 12:27:02,821 starting with  18 logbook entries
-2022-08-29 12:27:02,905 {'Aircraft ': 'E-170', 'From ': 'KBOS', 'To ': 'NA', 'from Lat': '42.3643', 'from Lon': '-71.005203'}
-2022-08-29 12:27:02,937 {'Aircraft ': 'E-170', 'From ': 'NA', 'To ': 'NA'}
-2022-08-29 12:27:02,937 found  16 valid routes
-2022-08-29 12:27:02,937 Plotting 11 consolidated flight routes
-2022-08-29 12:27:02,937 found  2 local Flights
+2022-09-03 08:55:24,810 starting with  19 logbook entries
+2022-09-03 08:55:24,943 {'Aircraft ': 'E-170', 'From ': 'KOKC ', 'To ': 'KDCA', 'to Lat': '38.8521', 'to Lon': '-77.037697'}
+2022-09-03 08:55:24,943 found  18 valid routes
+2022-09-03 08:55:24,943 Plotting 10 consolidated flight routes
+2022-09-03 08:55:24,943 found  0 local Flights
+2022-09-03 09:02:44,002 starting with  19 logbook entries
+2022-09-03 09:02:44,121 {'Aircraft ': 'E-170', 'From ': 'KOKC ', 'To ': 'KDCA', 'to Lat': '38.8521', 'to Lon': '-77.037697'}
+2022-09-03 09:02:44,121 found  18 valid routes
+2022-09-03 09:02:44,121 Plotting 10 consolidated flight routes
+2022-09-03 09:02:44,121 found  0 local Flights
+2022-09-03 09:03:22,406 starting with  19 logbook entries
+2022-09-03 09:03:22,546 found  19 valid routes
+2022-09-03 09:03:22,546 Plotting 11 consolidated flight routes
+2022-09-03 09:03:22,546 found  0 local Flights
+2022-09-03 09:13:06,213 starting with  19 logbook entries
+2022-09-03 09:13:57,522 starting with  19 logbook entries
+2022-09-03 09:14:13,091 starting with  19 logbook entries
+2022-09-03 09:14:13,228 found  19 valid routes
+2022-09-03 09:14:13,228 Plotting 11 consolidated flight routes
+2022-09-03 09:14:13,228 found  0 local Flights
+2022-09-03 09:16:30,472 starting with  19 logbook entries
+2022-09-03 09:16:30,602 found  19 valid routes
+2022-09-03 09:16:30,602 Plotting 11 consolidated flight routes
+2022-09-03 09:16:30,602 found  0 local Flights
+2022-09-03 10:34:00,242 starting with  19 logbook entries
+2022-09-03 10:34:00,355 found  19 valid routes
+2022-09-03 10:34:00,355 Plotting 11 consolidated flight routes
+2022-09-03 10:34:00,355 found  0 local Flights
+2022-09-03 10:38:57,269 starting with  19 logbook entries
+2022-09-03 10:38:57,408 found  19 valid routes
+2022-09-03 10:38:57,408 Plotting 11 consolidated flight routes
+2022-09-03 10:38:57,408 found  0 local Flights
+2022-09-03 10:39:58,139 starting with  19 logbook entries
+2022-09-03 10:39:58,276 found  19 valid routes
+2022-09-03 10:39:58,276 Plotting 11 consolidated flight routes
+2022-09-03 10:39:58,276 found  0 local Flights
+2022-09-03 10:43:55,911 starting with  19 logbook entries
+2022-09-03 10:43:56,045 found  19 valid routes
+2022-09-03 10:43:56,045 Plotting 11 consolidated flight routes
+2022-09-03 10:43:56,045 found  0 local Flights
