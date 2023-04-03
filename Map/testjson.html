@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Create Object from JSON String</h2>
+
+<p id="demo"></p>
+
+<p id="flight1"></p>
+
+
+<script>
+
+let text = '[' +
+'{"firstName":"John","lastName":"Doe" },' +
+'{"firstName":"Anna","lastName":"Smith" },' +
+'{"firstName":"Peter","lastName":"Jones" }]';
+
+///////////////////////////////
+
+function retrieveData(cb){
+ //instance of request obj
+ var request = new XMLHttpRequest;
+
+        //open connection and GET data
+ request.open("GET", "Logbook_with_routes2023.json", true);
+
+        //working with data respond
+ request.onload = function(){
+   data = JSON.parse(this.response);
+   return cb(data);
+ }
+
+        //send a request for data
+ request.send();
+}
+
+retrieveData(function(data){
+  //access data.name; data.climate
+	console.log(data[1]['Date']);
+})
+
+console.log(data[1]['Date']);
+
+//////////////////
+// (async () => {
+//   const getData = async () => {
+//     const response = await fetch("Logbook_with_routes2023.json");
+//     const data = await response.json();
+//     dataGlobal = data;
+//     return data;
+//   };
+
+//   let data_local = await getData();
+//   console.log(data_local);
+
+//   console.log(data_local[1]['Date']);
+
+
+//   // your code goes here...
+// })();
+
+
+
+
+///////////////////
+
+
+// let obj2
+
+// obj3 = fetch("Logbook_with_routes2023.json")
+//   .then(result => result.json())
+//   .then(data => { 
+//   	obj2 = data;
+//   });
+ // .then(() => {
+ // 	console.log("data",obj2);});
+////////////////////////////////////////////
+
+
+
+// async function getflights() {
+// 	const response = await fetch("Logbook_with_routes2023.json")
+// 	const data = await response.json()
+// 	console.log("data",data)
+// 	document.getElementById("flight1").innerHTML = data;
+// };
+
+
+// getflights();
+
+
+//////////////////////////////////////////////////
+
+
+//var logbook = JSON.parse(data);
+
+  // var data = await response.json();
+// 	console.log(data);
+  //.then((data) => { let logbook = data; })
+
+
+const obj = JSON.parse(text);
+document.getElementById("demo").innerHTML =
+obj[1].firstName + " " + obj[1].lastName;
+
+//document.getElementById("demo").innerHTML =
+//obj2[1]['Type'] + " " + obj[1].lastName;
+
+
+</script>
+
+</body>
+</html>
