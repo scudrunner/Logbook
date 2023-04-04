@@ -1,211 +1,255 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>Logbook Plotting</title>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+  <head>
+  <title>Logbook Plotting</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
 
-<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
-
-
-<script src="Leaflet_Files/leaflet.js"></script>
-<script src="usa_adm.geojson" type="text/javascript"></script>  
-<script src="Leaflet_Files/leaflet.curve.js" ></script>  
-<script src="Leaflet_Files/leaflet.ajax.min.js"></script>  
-  
-</head>
-  
-<body>
-<div id="map" style="width: 1000px; height: 600px;"></div>
-
-<script>
-function retrieveData(cb){
- //instance of request obj
- var request = new XMLHttpRequest;
-
-        //open connection and GET data
- request.open("GET", "Logbook_with_routes2023.json", true);
-
-        //working with data respond
- request.onload = function(){
-   data = JSON.parse(this.response);
-   return cb(data);
- }
-
-        //send a request for data
- request.send();
-}
+  <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
 
 
-var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '© OpenStreetMap'
-});
+  <script src="Leaflet_Files/leaflet.js"></script>
+  <script src="usa_adm.geojson" type="text/javascript"></script>  
+  <script src="Leaflet_Files/leaflet.curve.js" ></script>  
+  <script src="Leaflet_Files/leaflet.ajax.min.js"></script>  
+  <style type="text/css">
+        html { height: 100% }
+        body { height: 100%; margin: 0; padding: 0 }
+        .plane-icon {
+          padding:0px;
+          margin:0px;
+        }
+        #map_canvas { height: 100% }
+        #info {
+          position: absolute;
+          width:20%;
+          height:100%;
+          bottom:0px;
+          right:0px;
+          top:0px;
+          background-color: white;
+          border-left:1px #666 solid;
+          font-family:Helvetica;
+        }
+        #info div {
+          padding:0px;
+          padding-left:10px;
+          margin:0px;
+        }
+        #info div h1 {
+          margin-top:10px;
+          font-size:16px;
+        }
+        #info div p {
+          font-size:14px;
+          color:#333;
+        }
+      </style>
 
-var newMap = L.map('map', {
-    center: [38.9188702,-77.0708398],
-    zoom: 5,
-    layers: [osm]
-});
-
-
-
-// var newMap = L.map('map').setView([38.9188702,-77.0708398], 7);
-//     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-//     attribution: '&copy; <a href=”http://osm.org/copyright”>OpenStreetMap</a> contributors'
-//     }).addTo(newMap);
-
-
-
-
-var airports = L.layerGroup([]);
-var routes = L.layerGroup([]);
-var paths = L.layerGroup([]);
-
-var baseMaps = {
-    "OpenStreetMap": osm,
-};
-
-var overlayMaps = {
-    "Airports": airports,
-    "Routes": routes,
-    "Paths": paths
-};
-
-airports.addTo(newMap);
-
-var layerCOntrol = L.control.layers(baseMaps,overlayMaps).addTo(newMap);
-
-// var pointA = new L.LatLng(42.30919, -70.93169);
-//     var pointB = new L.LatLng(35.88735, -78.786);
-
-
-//     var pointList = [pointA, pointB];
-
-//     var firstpolyline = new L.Polyline(pointList, {
-//         color: 'blue',
-//         weight: 3,
-//         opacity: 0.5,
-//         smoothFactor: 1
-//     });
-//     firstpolyline.addTo(newMap);
-
-retrieveData(function(data){
-  //access data.name; data.climate
-  //console.log(data[1]['Date']);
-
-    const airportlist =[];
-    for (flight of data) {
-      //console.log(flight.Departure);
-          
-          // create curved routes 
-          var latlngs = [];
-
-          var latlng1 = [Number(flight["from Lat"]), Number(flight["from Lon"])];
-          var latlng2 = [Number(flight["to Lat"]),   Number(flight["to Lon"])];
-
-          var offsetX = latlng2[1] - latlng1[1],
-            offsetY = latlng2[0] - latlng1[0];
-
-          var r = Math.sqrt(Math.pow(offsetX, 2) + Math.pow(offsetY, 2)),
-            theta = Math.atan2(offsetY, offsetX);
-
-          var thetaOffset = (3.14 / 10);
-
-          var r2 = (r / 2) / (Math.cos(thetaOffset)),
-            theta2 = theta + thetaOffset;
-
-          var midpointX = (r2 * Math.cos(theta2)) + latlng1[1],
-            midpointY = (r2 * Math.sin(theta2)) + latlng1[0];
-
-          var midpointLatLng = [midpointY, midpointX];
-
-          latlngs.push(latlng1, midpointLatLng, latlng2);
-
-          var pathOptions = {
-            color: 'red',
-            weight: 1
-          }
-
-          var curvedPath = L.curve(
-            [
-              'M', latlng1,
-              'Q', midpointLatLng,
-              latlng2
-            ], pathOptions).addTo(routes);
-          //////// end curved routes 
-
-          ///start of marker listings 
-          const departure = [ flight["Departure"],flight["from Lat"],flight["from Lon"], flight["from name"]];
-          const arrival = [ flight["Arrival"],flight["to Lat"],flight["to Lon"], flight["to name"]] ;
-          var depfound = false;
-          var arrfound =false;
-          for (airport of airportlist) { //creating airport points
-            
-            if ( airport[0] === flight["Departure"]) {
-              depfound = true;
-              //console.log("found one");
-            }
-            if ( airport[0] === flight["Arrival"]) {
-              arrfound = true;
-              
-            } 
-          }
-          if (!depfound){
-           airportlist.push(departure); 
-          }
-          if (!arrfound){
-           airportlist.push(arrival); 
-          }
-          for (airport of airportlist) {// making markers 
-            const point1 = L.marker([Number(airport[1]),Number(airport[2])]).bindPopup(airport[3]).addTo(airports);
-          }
-          
-          /////start of loading paths 
-          if ( flight.hasOwnProperty('Route') ){
-            console.log("found one path");
-            var tracks = [];
-            for(pairing of flight['Route']){
-              
-              const data = pairing.split(',');
-              //long is first in the string since it was KML
-              var position = [Number(data[1]) ,Number(data[0])]
-              tracks.push(position);
-            }
-            //console.log("path", tracks);
-            //console.log("latlng", latlngs)
-            var flightdata = flight['Flight Number'] + '  ' + flight["Departure"] + '-' +  flight["Arrival"] + '  '+ flight['Date'] 
-            var polyline = L.polyline(tracks, {color: 'blue'}).bindPopup(flightdata).addTo(paths);
-            
-          }
-          
-
-
-
-
-
-          /// end of loading paths 
-
-
-
-
-    }// end of looping throgh json 
     
+  </head>
     
+  <body>
+  <div id="map" style="width: 1000px; height: 600px;"></div>
+
+  <script>
+  function retrieveData(cb){
+   //instance of request obj
+   var request = new XMLHttpRequest;
+
+          //open connection and GET data
+   request.open("GET", "Logbook_with_routes2023.json", true);
+
+          //working with data respond
+   request.onload = function(){
+     data = JSON.parse(this.response);
+     return cb(data);
+   }
+
+          //send a request for data
+   request.send();
+  }
+
+
+  var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '© OpenStreetMap'
+  });
+
+  var newMap = L.map('map', {
+      center: [38.9188702,-77.0708398],
+      zoom: 5,
+      layers: [osm]
+  });
+
+
+
+  // var newMap = L.map('map').setView([38.9188702,-77.0708398], 7);
+  //     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+  //     attribution: '&copy; <a href=”http://osm.org/copyright”>OpenStreetMap</a> contributors'
+  //     }).addTo(newMap);
+
+
+
+
+  var airports = L.layerGroup([]);
+  var routes = L.layerGroup([]);
+  var paths = L.layerGroup([]);
+
+  var baseMaps = {
+      "OpenStreetMap": osm,
+  };
+
+  var overlayMaps = {
+      "Airports": airports,
+      "Routes": routes,
+      "Paths": paths
+  };
+
+  airports.addTo(newMap);
+
+  var layerCOntrol = L.control.layers(baseMaps,overlayMaps).addTo(newMap);
+
+  // var pointA = new L.LatLng(42.30919, -70.93169);
+  //     var pointB = new L.LatLng(35.88735, -78.786);
+
+
+  //     var pointList = [pointA, pointB];
+
+  //     var firstpolyline = new L.Polyline(pointList, {
+  //         color: 'blue',
+  //         weight: 3,
+  //         opacity: 0.5,
+  //         smoothFactor: 1
+  //     });
+  //     firstpolyline.addTo(newMap);
+
+  retrieveData(function(data){
+    //access data.name; data.climate
+    //console.log(data[1]['Date']);
+
+      const airportlist =[];
+      for (flight of data) {
+        //console.log(flight.Departure);
+            
+            // create curved routes 
+            var latlngs = [];
+
+            var latlng1 = [Number(flight["from Lat"]), Number(flight["from Lon"])];
+            var latlng2 = [Number(flight["to Lat"]),   Number(flight["to Lon"])];
+
+            var offsetX = latlng2[1] - latlng1[1],
+              offsetY = latlng2[0] - latlng1[0];
+
+            var r = Math.sqrt(Math.pow(offsetX, 2) + Math.pow(offsetY, 2)),
+              theta = Math.atan2(offsetY, offsetX);
+
+            var thetaOffset = (3.14 / 10);
+
+            var r2 = (r / 2) / (Math.cos(thetaOffset)),
+              theta2 = theta + thetaOffset;
+
+            var midpointX = (r2 * Math.cos(theta2)) + latlng1[1],
+              midpointY = (r2 * Math.sin(theta2)) + latlng1[0];
+
+            var midpointLatLng = [midpointY, midpointX];
+
+            latlngs.push(latlng1, midpointLatLng, latlng2);
+
+            var pathOptions = {
+              color: 'red',
+              weight: 1
+            }
+
+            var curvedPath = L.curve(
+              [
+                'M', latlng1,
+                'Q', midpointLatLng,
+                latlng2
+              ], pathOptions).addTo(routes);
+            //////// end curved routes 
+
+            ///start of marker listings 
+            const departure = [ flight["Departure"],flight["from Lat"],flight["from Lon"], flight["from name"]];
+            const arrival = [ flight["Arrival"],flight["to Lat"],flight["to Lon"], flight["to name"]] ;
+            var depfound = false;
+            var arrfound =false;
+            for (airport of airportlist) { //creating airport points
+              
+              if ( airport[0] === flight["Departure"]) {
+                depfound = true;
+                //console.log("found one");
+              }
+              if ( airport[0] === flight["Arrival"]) {
+                arrfound = true;
+                
+              } 
+            }
+            if (!depfound){
+             airportlist.push(departure); 
+            }
+            if (!arrfound){
+             airportlist.push(arrival); 
+            }
+            for (airport of airportlist) {// making markers 
+              const point1 = L.marker([Number(airport[1]),Number(airport[2])]).bindPopup(airport[3]).addTo(airports);
+            }
+            
+            /////start of loading paths 
+            if ( flight.hasOwnProperty('Route') ){
+              console.log("found one path");
+              var tracks = [];
+              for(pairing of flight['Route']){
+                
+                const data = pairing.split(',');
+                //long is first in the string since it was KML
+                var position = [Number(data[1]) ,Number(data[0])]
+                tracks.push(position);
+              }
+              //console.log("path", tracks);
+              //console.log("latlng", latlngs)
+              var flightdata = flight['Flight Number'] + '  ' + flight["Departure"] + '-' +  flight["Arrival"] + '  '+ flight['Date'] 
+
+              var pathOptions2 = {
+              color: 'blue',
+              weight: 1
+              }
+              var polyline = L.polyline(tracks, pathOptions2).bindPopup(flightdata).addTo(paths);
+              
+            }
+            
+
+
+
+
+
+            /// end of loading paths 
+
+
+
+
+      }// end of looping throgh json 
+      
+      
+    
+      //console.log(airportlist);
+
+  })// end of function retreiveData 
+
+
   
-    //console.log(airportlist);
-
-})// end of function retreiveData 
-
-
-//var geojson = new L.GeoJSON.AJAX("usa_adm.geojson");
-//geojson.addTo(newMap);
-  
-</script>
-
-  
-</body>
+    
+  </script>
+<div id="info">
+      <div>
+        <h1>Dump1090</h1>
+        <p id="geninfo"></p>
+        <p id="selinfo">Click on a plane for info.</p>
+      </div>
+    </div>
+    
+  </body>
 
 
 </html>
