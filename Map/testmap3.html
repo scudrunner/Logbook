@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
 
+
   <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
 
 
@@ -19,6 +20,16 @@
         .plane-icon {
           padding:0px;
           margin:0px;
+        }
+        .leaflet-div-icon2
+        {
+          background:red;
+          border:5px solid rgba(0,255,255,0.5);
+          color:blueviolet;
+          font-weight:bold;
+          text-align:center;
+          border-radius:50%;
+          line-height:30px;
         }
         #map_canvas { height: 100% }
         #info {
@@ -59,7 +70,9 @@
     paths = L.layerGroup([]);
     colorpaths = L.layerGroup([]);
     Planes={};
+    FlightTime = [];
     NumPlanes = 0;
+    NumFlights = 0;
     NumRoutes = 0;
     NumPaths = 0 
     Selected=null
@@ -79,47 +92,31 @@ function fetchData() {
         $.getJSON('Logbook_with_routes2023.json', function(data) {
 
       const airportlist =[];
+      const filteredFlights = []
+
       for (flight of data) {
-        //console.log(flight.Departure);
-            NumRoutes +=1;
-            // create curved routes 
-            var latlngs = [];
+            //console.log(flight.Departure);
+            NumFlights +=1;
 
-            var latlng1 = [Number(flight["from Lat"]), Number(flight["from Lon"])];
-            var latlng2 = [Number(flight["to Lat"]),   Number(flight["to Lon"])];
-
-            var offsetX = latlng2[1] - latlng1[1],
-              offsetY = latlng2[0] - latlng1[0];
-
-            var r = Math.sqrt(Math.pow(offsetX, 2) + Math.pow(offsetY, 2)),
-              theta = Math.atan2(offsetY, offsetX);
-
-            var thetaOffset = (3.14 / 10);
-
-            var r2 = (r / 2) / (Math.cos(thetaOffset)),
-              theta2 = theta + thetaOffset;
-
-            var midpointX = (r2 * Math.cos(theta2)) + latlng1[1],
-              midpointY = (r2 * Math.sin(theta2)) + latlng1[0];
-
-            var midpointLatLng = [midpointY, midpointX];
-
-            latlngs.push(latlng1, midpointLatLng, latlng2);
-
-            var pathOptions = {
-              color: 'red',
-              weight: 1
+            // create list for curved routes 
+            var found = false;             
+            
+            for (route of filteredFlights) {
+              if ( (route["Departure"] == flight["Departure"]) && (route["Arrival"] == flight["Arrival"]) || 
+                    (route["Arrival"] == flight["Departure"]) && (route["Departure"] == flight["Arrival"])
+                ) {
+                found = true; 
+                console.log("found a matching fligth pair)");
+              }    
+            }
+            if (!found){
+                filteredFlights.push(flight);
+                console.log("pushing pair)");
+                NumRoutes +=1;
             }
 
-            var curvedPath = L.curve(
-              [
-                'M', latlng1,
-                'Q', midpointLatLng,
-                latlng2
-              ], pathOptions).addTo(routes);
-            //////// end curved routes 
-
             ///start of marker listings 
+            var myIcon = L.divIcon({className: 'leaflet-div-icon2'});
             const departure = [ flight["Departure"],flight["from Lat"],flight["from Lon"], flight["from name"]];
             const arrival = [ flight["Arrival"],flight["to Lat"],flight["to Lon"], flight["to name"]] ;
             var depfound = false;
@@ -142,7 +139,7 @@ function fetchData() {
              airportlist.push(arrival); 
             }
             for (airport of airportlist) {// making markers 
-              const point1 = L.marker([Number(airport[1]),Number(airport[2])]).bindPopup(airport[3]).addTo(airports);
+              const point1 = L.marker( [Number(airport[1]),Number(airport[2])], {icon: myIcon} ).bindPopup(airport[3]).addTo(airports);
             }
             
             /////start of loading paths 
@@ -191,13 +188,13 @@ function fetchData() {
               polyline.on('click', function(e) {
                 //it will not zoom becasue it does not like newMap based on where it is defined...  I have played with where everything is defined based on reading the JSON data and this implementation mirros dump1090  
                 //newMap.fitBounds(polyline.getBounds());
-                console.log("you clicked me");
+                //console.log("you clicked me");
                 
               });
 
               /////start a colorcoded geojson....  
               ////lots of iffs here later for filtering 
-              console.log(flightdata);
+              //console.log(flightdata);
               if (JSON.stringify(flightdata) === JSON.stringify("DL5631  KDCA-KLGA  3/17/2023")){
                 //console.log("you found me");
                 var subtrack=[];
@@ -207,7 +204,7 @@ function fetchData() {
                       color: getColor(altitude[i]),
                       weight: 4
                   }
-                  console.log(pathOptions2);
+                  //console.log(pathOptions2);
                   subtrack.push(tracks[i]);
                   subtrack.push(tracks[i+1]);
                   var polyline = L.polyline(subtrack, pathOptions2).addTo(colorpaths);
@@ -240,7 +237,44 @@ function fetchData() {
       }// end of looping throgh json 
       
 
+      for (flight of filteredFlights) {
+            var latlngs = [];
 
+            var latlng1 = [Number(flight["from Lat"]), Number(flight["from Lon"])];
+            var latlng2 = [Number(flight["to Lat"]),   Number(flight["to Lon"])];
+
+            var offsetX = latlng2[1] - latlng1[1],
+              offsetY = latlng2[0] - latlng1[0];
+
+            var r = Math.sqrt(Math.pow(offsetX, 2) + Math.pow(offsetY, 2)),
+              theta = Math.atan2(offsetY, offsetX);
+
+            var thetaOffset = (3.14 / 10);
+
+            var r2 = (r / 2) / (Math.cos(thetaOffset)),
+              theta2 = theta + thetaOffset;
+
+            var midpointX = (r2 * Math.cos(theta2)) + latlng1[1],
+              midpointY = (r2 * Math.sin(theta2)) + latlng1[0];
+
+            var midpointLatLng = [midpointY, midpointX];
+
+            latlngs.push(latlng1, midpointLatLng, latlng2);
+
+            var pathOptions = {
+              color: 'red',
+              weight: 2
+            }
+
+            var curvedPath = L.curve(
+              [
+                'M', latlng1,
+                'Q', midpointLatLng,
+                latlng2
+              ], pathOptions).addTo(routes);
+            curvedPath.bindTooltip(flight["Departure"]+' - ' + flight["Arrival"]);
+            //////// end curved routes         
+      }
 
         });
   }
@@ -249,7 +283,7 @@ function fetchData() {
  function refreshGeneralInfo() {
         var i = document.getElementById('geninfo');
 
-        i.innerHTML = NumRoutes+' Routes ' + NumPaths+'Paths ';
+        i.innerHTML = NumFlights+' Flights ' + NumPaths+'GPS Paths ' + NumRoutes + ' distinct routes';
     } 
 
 
