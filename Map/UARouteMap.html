@@ -9,7 +9,6 @@
 
   <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"> </script>
 
   <script src="Leaflet_Files/leaflet.js"></script>
   <script src="usa_adm.geojson" type="text/javascript"></script>  
@@ -67,6 +66,7 @@
   <script>
     
     airports = L.layerGroup([]);
+    hotels = L.layerGroup([]);
     routes = L.layerGroup([]);
     paths = L.layerGroup([]);
     colorpaths = L.layerGroup([]);
@@ -90,155 +90,179 @@ function getColor(x) {
 };  
 
 function fetchData() {
-        $.getJSON('Logbook_with_routes2023.json', function(data) {
+        $.getJSON('parsed_p_EWR75605.json', function(data) {
 
       const airportlist =[];
+      const layovers = [];
       const filteredFlights = []
 
-      for (flight of data) {
-            //console.log(flight.Departure);
+      for (pairing of data) { // start looping through the pairing json 
+            //console.log(pairing);
+        for (flight of pairing["legs"] ){ // loop through each set of legs on each pairing 
             NumFlights +=1;
 
             // create list for curved routes 
             var found = false;             
             
             for (route of filteredFlights) {
-              if ( (route["Departure"] == flight["Departure"]) && (route["Arrival"] == flight["Arrival"]) || 
-                    (route["Arrival"] == flight["Departure"]) && (route["Departure"] == flight["Arrival"])
+              if ( (route["From"] == flight["From"]) && (route["To"] == flight["To"]) || 
+                    (route["To"] == flight["From"]) && (route["From"] == flight["To"])
                 ) {
                 found = true; 
-                console.log("found a matching fligth pair)");
+                //console.log("found a matching fligth pair)");
               }    
             }
             if (!found){
                 filteredFlights.push(flight);
-                console.log("pushing pair)");
+                //console.log("pushing pair)");
                 NumRoutes +=1;
             }
 
             ///start of marker listings 
             var myIcon = L.divIcon({className: 'leaflet-div-icon2'});
-            const departure = [ flight["Departure"],flight["from Lat"],flight["from Lon"], flight["from name"]];
-            const arrival = [ flight["Arrival"],flight["to Lat"],flight["to Lon"], flight["to name"]] ;
+            const departure = [ flight["From"],flight["from Lat"],flight["from Lon"], flight["from name"]];
+            const arrival = [ flight["To"],flight["to Lat"],flight["to Lon"], flight["to name"]] ;
             var depfound = false;
             var arrfound =false;
             for (airport of airportlist) { //creating airport points
               
-              if ( airport[0] === flight["Departure"]) {
+              if ( airport[0] == flight["From"]) {
                 depfound = true;
                 //console.log("found one");
               }
-              if ( airport[0] === flight["Arrival"]) {
+              if ( airport[0] == flight["To"]) {
                 arrfound = true;
                 
               } 
             }
             if (!depfound){
-             airportlist.push(departure); 
+             airportlist.push(departure);
+             console.log("found new one"); 
             }
             if (!arrfound){
-             airportlist.push(arrival); 
+             airportlist.push(arrival);
+             console.log("found new one");
             }
 
-            
-            /////start of loading paths 
-            if ( flight.hasOwnProperty('Route') ){
-              NumPaths += 1;
-              //console.log("found one path");
-              var tracks = [];
-              var altitude =[];
-              for(pairing of flight['Route']){
+
+
+            if ( flight.hasOwnProperty('Hotel') ){
+              var arrfound =false;
+              for (airport of layovers) { //creating overnight points              
+                if ( airport[0] == flight["To"]) {
+                  arrfound = true;
+                } 
+              }
+              if (!arrfound){
+                arrival['Hotel'] = flight['Hotel']
+                layovers.push(arrival);
+                //console.log("found new one");
+              }
+            }
+
+            // /////start of loading paths 
+            // if ( flight.hasOwnProperty('Route') ){
+            //   NumPaths += 1;
+            //   //console.log("found one path");
+            //   var tracks = [];
+            //   var altitude =[];
+            //   for(pairing of flight['Route']){
                 
-                const data = pairing.split(',');
-                //long is first in the string since it was KML
-                var position = [Number(data[1]) ,Number(data[0])];
-                altitude.push(Number(data[2]));
-                tracks.push(position);
-              }
+            //     const data = pairing.split(',');
+            //     //long is first in the string since it was KML
+            //     var position = [Number(data[1]) ,Number(data[0])];
+            //     altitude.push(Number(data[2]));
+            //     tracks.push(position);
+            //   }
 
 
-              //console.log("path", tracks);
-              //console.log("latlng", latlngs)
-              var flightdata = flight['Flight Number'] + '  ' + flight["Departure"] + '-' +  flight["Arrival"] + '  '+ flight['Date'] 
+            //   //console.log("path", tracks);
+            //   //console.log("latlng", latlngs)
+            //   var flightdata = flight['Flight Number'] + '  ' + flight["Departure"] + '-' +  flight["Arrival"] + '  '+ flight['Date'] 
 
-              var pathOptions2 = {
-              color: 'blue',
-              weight: 1
-              }
-              var polyline = L.polyline(tracks, pathOptions2).bindPopup(flightdata).addTo(paths);
-              polyline.on('mouseover', function(e) {
-                var layer = e.target;
+            //   var pathOptions2 = {
+            //   color: 'blue',
+            //   weight: 1
+            //   }
+            //   var polyline = L.polyline(tracks, pathOptions2).bindPopup(flightdata).addTo(paths);
+            //   polyline.on('mouseover', function(e) {
+            //     var layer = e.target;
 
-                layer.setStyle({
-                    color: 'blue',
-                    opacity: 1,
-                    weight: 5
-                });
-              });
-              polyline.on('mouseout', function(e) {
-                var layer = e.target;
+            //     layer.setStyle({
+            //         color: 'blue',
+            //         opacity: 1,
+            //         weight: 5
+            //     });
+            //   });
+            //   polyline.on('mouseout', function(e) {
+            //     var layer = e.target;
 
-                layer.setStyle({
-                    color: 'blue',
-                    opacity: 1,
-                    weight: 1
-                });
-              });
-              polyline.on('click', function(e) {
-                //it will not zoom becasue it does not like newMap based on where it is defined...  I have played with where everything is defined based on reading the JSON data and this implementation mirros dump1090  
-                //newMap.fitBounds(polyline.getBounds());
-                //console.log("you clicked me");
+            //     layer.setStyle({
+            //         color: 'blue',
+            //         opacity: 1,
+            //         weight: 1
+            //     });
+            //   });
+            //   polyline.on('click', function(e) {
+            //     //it will not zoom becasue it does not like newMap based on where it is defined...  I have played with where everything is defined based on reading the JSON data and this implementation mirros dump1090  
+            //     //newMap.fitBounds(polyline.getBounds());
+            //     //console.log("you clicked me");
                 
-              });
+            //   });
 
-              /////start a colorcoded geojson....  
-              ////lots of iffs here later for filtering 
-              //console.log(flightdata);
-              if (JSON.stringify(flightdata) === JSON.stringify("DL5631  KDCA-KLGA  3/17/2023")){
-                //console.log("you found me");
-                var subtrack=[];
-                for (let i = 0; i < (tracks.length -1); i++) {
-                  var subtrack=[];
-                  var pathOptions2 = {
-                      color: getColor(altitude[i]),
-                      weight: 4
-                  }
-                  //console.log(pathOptions2);
-                  subtrack.push(tracks[i]);
-                  subtrack.push(tracks[i+1]);
-                  var polyline = L.polyline(subtrack, pathOptions2).addTo(colorpaths);
-                      polyline.on('mouseover', function(e) {
-                        var layer = e.target;
+            //   /////start a colorcoded geojson....  
+            //   ////lots of iffs here later for filtering 
+            //   //console.log(flightdata);
+            //   if (JSON.stringify(flightdata) === JSON.stringify("DL5631  KDCA-KLGA  3/17/2023")){
+            //     //console.log("you found me");
+            //     var subtrack=[];
+            //     for (let i = 0; i < (tracks.length -1); i++) {
+            //       var subtrack=[];
+            //       var pathOptions2 = {
+            //           color: getColor(altitude[i]),
+            //           weight: 4
+            //       }
+            //       //console.log(pathOptions2);
+            //       subtrack.push(tracks[i]);
+            //       subtrack.push(tracks[i+1]);
+            //       var polyline = L.polyline(subtrack, pathOptions2).addTo(colorpaths);
+            //           polyline.on('mouseover', function(e) {
+            //             var layer = e.target;
 
-                          layer.setStyle({
-                          opacity: 1,
-                          weight: 7
-                          });
-                      });
-                      polyline.on('mouseout', function(e) {
-                        var layer = e.target;
-                          layer.setStyle({
-                          opacity: 1,
-                          weight: 4
-                          });
-                      });
-                      polyline.bindTooltip(flightdata + +'  ' + altitude[i] + 'm');
-                  //console.log(subtrack);
-                }
+            //               layer.setStyle({
+            //               opacity: 1,
+            //               weight: 7
+            //               });
+            //           });
+            //           polyline.on('mouseout', function(e) {
+            //             var layer = e.target;
+            //               layer.setStyle({
+            //               opacity: 1,
+            //               weight: 4
+            //               });
+            //           });
+            //           polyline.bindTooltip(flightdata + +'  ' + altitude[i] + 'm');
+            //       //console.log(subtrack);
+            //     }
 
-              }
+            //   }
 
-            }/// end of loading paths 
-
-
+            // }/// end of loading paths 
 
 
+
+        } // end of the loope for neseted routes 
       }// end of looping throgh json 
-      
-      for (airport of airportlist) {// making markers 
-        const point1 = L.marker( [Number(airport[1]),Number(airport[2])] ).bindPopup(airport[3]).addTo(airports);
-      }
 
+      for (airport of airportlist) {// making markers 
+        const point1 = L.circleMarker( [Number(airport[1]),Number(airport[2])]).bindPopup(airport[0] + ": " + airport[3]).setStyle({radius:5, color: 'green'}).addTo(airports);
+      }
+      
+      for (airport of layovers) {// making markers 
+        const point1 = L.circleMarker( [Number(airport[1]),Number(airport[2])]).bindPopup(airport[0] + ": " + airport['Hotel']).setStyle({radius:5, color: 'purple'}).addTo(hotels);
+      }
+      
+      
 
       for (flight of filteredFlights) {
             var latlngs = [];
@@ -314,12 +338,14 @@ function initialize() {
 
       var overlayMaps = {
           "Airports": airports,
+          "Layovers": hotels,
           "Routes": routes,
           "Paths": paths,
           "Colorpaths": colorpaths
       };
 
       airports.addTo(newMap);
+      
 
       var layerCOntrol = L.control.layers(baseMaps,overlayMaps).addTo(newMap);
 
