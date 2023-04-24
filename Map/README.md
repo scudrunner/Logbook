@@ -7,11 +7,3 @@
  python3 -m http.server
 
 
-
-to do list 
-Hotels 
-    creat a list of all hotels by name 
-    write a scraper to get hotel coordinates and information 
-    add this to the hotels.
-
-    
